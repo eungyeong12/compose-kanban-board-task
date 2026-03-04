@@ -4,22 +4,23 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.InputChip
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
+import androidx.compose.material3.SuggestionChip
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -42,13 +43,18 @@ import org.jetbrains.compose.resources.painterResource
 @Preview(showBackground = true)
 fun App() {
     val inputWindow = InputWindow()
+    // val taskCardGroup = mutableListOf<TaskCard>()
+
     Box(
         modifier = Modifier.fillMaxSize(),
     ) {
-        var showInputWindow = AddButton(modifier = Modifier.align(Alignment.BottomEnd))
-        if (showInputWindow) inputWindow.OpenInputWindow()
+        // GroupTheTaskCard(taskCardGroup)
+        val openInputWindow = AddButton(modifier = Modifier.align(Alignment.BottomEnd))
+        if (openInputWindow) {
+            val (taskCard, isConfirmed) = inputWindow.OpenInputWindow()
+            if (isConfirmed) CreateTaskCard(taskCard)
+        }
     }
-
 }
 
 @Composable
@@ -70,12 +76,21 @@ fun AddButton(modifier: Modifier): Boolean {
             )
             Text(
                 text = "추가",
-                fontSize = 50.sp
+                fontSize = 50.sp,
             )
         }
     }
     return showInputWindow
 }
+//
+//@Composable
+//fun GroupTheTaskCard(taskCardGroup: List<TaskCard>) {
+//    LazyColumn {
+//        items(taskCardGroup.size) { item ->
+//            CreateTaskCard(taskCard = taskCardGroup[item])
+//        }
+//    }
+//}
 
 @Composable
 fun CreateTaskCard(taskCard: TaskCard) {
@@ -86,59 +101,57 @@ fun CreateTaskCard(taskCard: TaskCard) {
         border = BorderStroke(1.dp, Color.Black),
         modifier = Modifier.width(286.dp),
     ) {
-        LazyColumn(
-            contentPadding = PaddingValues(16.dp)
+        Column(
+            modifier = Modifier.padding(16.dp),
         ) {
-            item {
-                Text(
-                    text = taskCard.title,
-                    modifier = Modifier
-                        .size(width = 252.dp, height = 26.dp)
-                        .align(Alignment.CenterHorizontally),
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold,
-                )
-                Text(
-                    text = taskCard.contents,
-                    modifier = Modifier
-                        .size(width = 252.dp, height = 40.dp)
-                        .align(Alignment.CenterHorizontally),
-                    fontSize = 14.sp,
-                    color = Color.Gray,
-                )
-                FlowRow(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    verticalArrangement = Arrangement.spacedBy(4.dp),
-                ) {
-                    taskCard.tags.forEach { tag ->
-                        InputChip(
-                            selected = false,
-                            label = { Text(tag) },
-                            onClick = {  },
-                        )
-                    }
+            Text(
+                text = taskCard.title,
+                modifier = Modifier
+                    .size(width = 252.dp, height = 26.dp)
+                    .align(Alignment.CenterHorizontally),
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold,
+            )
+            Text(
+                text = taskCard.contents,
+                modifier = Modifier
+                    .size(width = 252.dp, height = 40.dp)
+                    .align(Alignment.CenterHorizontally),
+                fontSize = 14.sp,
+                color = Color.Gray,
+            )
+            FlowRow(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalArrangement = Arrangement.spacedBy(4.dp),
+            ) {
+                taskCard.tags.forEach { tag ->
+                    SuggestionChip(
+                        label = { Text(tag) },
+                        onClick = { },
+                    )
                 }
-                Row(modifier = Modifier
+            }
+            Row(
+                modifier = Modifier
                     .size(width = 252.dp, height = 45.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ){
-                    Image(
-                        painter = painterResource(Res.drawable.profile_image),
-                        contentDescription = "",
-                        modifier = Modifier
-                            .size(24.dp)
-                            .align(Alignment.CenterVertically),
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text(
-                        text = taskCard.author,
-                        modifier = Modifier
-                            .height(20.dp)
-                            .align(Alignment.CenterVertically),
-                        fontSize = 14.sp,
-                    )
-                }
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Image(
+                    painter = painterResource(Res.drawable.profile_image),
+                    contentDescription = "",
+                    modifier = Modifier
+                        .size(24.dp)
+                        .align(Alignment.CenterVertically),
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(
+                    text = taskCard.author,
+                    modifier = Modifier
+                        .height(20.dp)
+                        .align(Alignment.CenterVertically),
+                    fontSize = 14.sp,
+                )
             }
         }
     }
