@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CardDefaults
@@ -31,6 +30,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -111,6 +111,8 @@ fun CreateTaskCard(taskCard: TaskCard) {
                     .align(Alignment.CenterHorizontally),
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
             )
             Text(
                 text = taskCard.contents,
@@ -119,6 +121,8 @@ fun CreateTaskCard(taskCard: TaskCard) {
                     .align(Alignment.CenterHorizontally),
                 fontSize = 14.sp,
                 color = Color.Gray,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis
             )
             FlowRow(
                 modifier = Modifier.fillMaxWidth(),
@@ -151,6 +155,8 @@ fun CreateTaskCard(taskCard: TaskCard) {
                         .height(20.dp)
                         .align(Alignment.CenterVertically),
                     fontSize = 14.sp,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
                 )
             }
         }

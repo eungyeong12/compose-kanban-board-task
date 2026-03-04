@@ -9,8 +9,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedCard
+import androidx.compose.material3.Snackbar
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -102,7 +104,7 @@ class InputWindow {
 
         TextField(
             value = text,
-            onValueChange = { newText -> text },
+            onValueChange = { newText -> text = newText },
             label = { Text("입력하세요") },
             modifier = weight,
         )
@@ -113,6 +115,7 @@ class InputWindow {
     fun TagInput(): List<String> {
         var tags by remember { mutableStateOf(listOf<String>()) }
         var tempTag by remember { mutableStateOf("") }
+        var showDialog by remember { mutableStateOf(false) }
 
         Column() {
             TextField(
@@ -125,7 +128,17 @@ class InputWindow {
                 keyboardActions = KeyboardActions(
                     onDone = {
                         if (tempTag.isNotBlank() && !tags.contains(tempTag)) {
-                            tags = tags + tempTag.trim()
+                            when {
+                                tags.size > 5 -> {
+                                    return@KeyboardActions
+                                }
+                                tempTag.length > 5 -> {
+                                    return@KeyboardActions
+                                }
+                                else -> {
+                                    tags = tags + tempTag.trim()
+                                }
+                            }
                             tempTag = ""
                         }
                     },
