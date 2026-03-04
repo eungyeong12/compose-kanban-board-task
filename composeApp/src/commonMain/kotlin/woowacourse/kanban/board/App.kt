@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CardDefaults
@@ -43,16 +44,18 @@ import org.jetbrains.compose.resources.painterResource
 @Preview(showBackground = true)
 fun App() {
     val inputWindow = InputWindow()
-    // val taskCardGroup = mutableListOf<TaskCard>()
+    val taskCardGroup by remember { mutableStateOf(mutableListOf<TaskCard>()) }
 
     Box(
         modifier = Modifier.fillMaxSize(),
     ) {
-        // GroupTheTaskCard(taskCardGroup)
         val openInputWindow = AddButton(modifier = Modifier.align(Alignment.BottomEnd))
         if (openInputWindow) {
             val (taskCard, isConfirmed) = inputWindow.OpenInputWindow()
-            if (isConfirmed) CreateTaskCard(taskCard)
+            if (isConfirmed) {
+                taskCardGroup.add(taskCard)
+                GroupTheTaskCard(taskCardGroup)
+            }
         }
     }
 }
@@ -82,15 +85,17 @@ fun AddButton(modifier: Modifier): Boolean {
     }
     return showInputWindow
 }
-//
-//@Composable
-//fun GroupTheTaskCard(taskCardGroup: List<TaskCard>) {
-//    LazyColumn {
-//        items(taskCardGroup.size) { item ->
-//            CreateTaskCard(taskCard = taskCardGroup[item])
-//        }
-//    }
-//}
+
+@Composable
+fun GroupTheTaskCard(taskCardGroup: List<TaskCard>) {
+    LazyColumn(
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        items(taskCardGroup.size) { item ->
+            CreateTaskCard(taskCard = taskCardGroup[item])
+        }
+    }
+}
 
 @Composable
 fun CreateTaskCard(taskCard: TaskCard) {
