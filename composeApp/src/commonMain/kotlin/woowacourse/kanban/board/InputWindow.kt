@@ -1,6 +1,5 @@
 package woowacourse.kanban.board
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -9,143 +8,133 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedCard
-import androidx.compose.material3.Snackbar
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 
-class InputWindow {
-    @Composable
-    // @Preview(showBackground = true)
-    fun OpenInputWindow(): Pair<TaskCard, Boolean> {
-        var title = "LazyColumn 컴포넌트 구현"
-        var contents = ""
-        var tags = listOf<String>()
-        var author = "다이노"
-        var isVisible by remember { mutableStateOf(true) }
-        var isConfirmed by remember { mutableStateOf(false) }
+@Composable
+fun OpenInputWindow(taskCardGroup: SnapshotStateList<TaskCard>, openInputWindow: MutableState<Boolean>) {
+    var title = "LazyColumn 컴포넌트 구현"
+    var contents = ""
+    var tags = listOf<String>()
+    var author = "다이노"
 
-        AnimatedVisibility(visible = isVisible) {
-            OutlinedCard(
-                modifier = Modifier
-                    .size(width = 200.dp, height = 270.dp),
+    OutlinedCard(
+        modifier = Modifier
+            .size(width = 200.dp, height = 270.dp),
+    ) {
+        Column {
+            // 제목 입력
+            Row(modifier = Modifier.height(40.dp)) {
+                Text(
+                    text = "제목: ",
+                    modifier = Modifier.align(Alignment.CenterVertically),
+                )
+                val tempTitle = GetTextField(Modifier.weight(1f))
+                if (tempTitle.isNotEmpty()) title = tempTitle
+            }
+            Spacer(modifier = Modifier.height(10.dp))
+            // 내용 입력
+            Row(modifier = Modifier.height(40.dp)) {
+                Text(
+                    text = "내용: ",
+                    modifier = Modifier.align(Alignment.CenterVertically),
+                )
+                contents = GetTextField(Modifier.weight(1f))
+            }
+            Spacer(modifier = Modifier.height(10.dp))
+            // 태그 입력
+            Row(modifier = Modifier.height(40.dp)) {
+                Text(
+                    text = "태그: ",
+                    modifier = Modifier.align(Alignment.CenterVertically),
+                )
+                tags = TagInput()
+            }
+            Spacer(modifier = Modifier.height(10.dp))
+            // 작성자 입력
+            Row(modifier = Modifier.height(40.dp)) {
+                Text(
+                    text = "작성자: ",
+                    modifier = Modifier.align(Alignment.CenterVertically),
+                )
+                val tempAuthor = GetTextField(Modifier.weight(1f))
+                if (tempAuthor.isNotEmpty()) author = tempAuthor
+            }
+            Spacer(modifier = Modifier.height(10.dp))
+            // 확인 버튼
+            Button(
+                onClick = {
+                    taskCardGroup.add(TaskCard(title, contents, tags, author))
+                    openInputWindow.value = false
+                },
+                modifier = Modifier.align(Alignment.End),
             ) {
-                Column {
-                    // 제목 입력
-                    Row(modifier = Modifier.height(40.dp)) {
-                        Text(
-                            text = "제목: ",
-                            modifier = Modifier.align(Alignment.CenterVertically),
-                        )
-                        val tempTitle = GetTextField(Modifier.weight(1f))
-                        if (tempTitle.isNotEmpty()) title = tempTitle
-                    }
-                    Spacer(modifier = Modifier.height(10.dp))
-                    // 내용 입력
-                    Row(modifier = Modifier.height(40.dp)) {
-                        Text(
-                            text = "내용: ",
-                            modifier = Modifier.align(Alignment.CenterVertically),
-                        )
-                        contents = GetTextField(Modifier.weight(1f))
-                    }
-                    Spacer(modifier = Modifier.height(10.dp))
-                    // 태그 입력
-                    Row(modifier = Modifier.height(40.dp)) {
-                        Text(
-                            text = "태그: ",
-                            modifier = Modifier.align(Alignment.CenterVertically),
-                        )
-                        tags = TagInput()
-                    }
-                    Spacer(modifier = Modifier.height(10.dp))
-                    // 작성자 입력
-                    Row(modifier = Modifier.height(40.dp)) {
-                        Text(
-                            text = "작성자: ",
-                            modifier = Modifier.align(Alignment.CenterVertically),
-                        )
-                        val tempAuthor = GetTextField(Modifier.weight(1f))
-                        if (tempAuthor.isNotEmpty()) author = tempAuthor
-                    }
-                    Spacer(modifier = Modifier.height(10.dp))
-                    // 확인 버튼
-                    Button(
-                        onClick = {
-                            isVisible = false
-                            isConfirmed = true
-                        },
-                        modifier = Modifier.align(Alignment.End),
-                    ) {
-                        Text("확인")
-                    }
-                }
+                Text("확인")
             }
         }
-
-        return TaskCard(title, contents, tags, author) to isConfirmed
     }
+}
 
-    @Composable
-    fun GetTextField(weight: Modifier): String {
-        var text by rememberSaveable { mutableStateOf("") }
+@Composable
+fun GetTextField(weight: Modifier): String {
+    var text by rememberSaveable { mutableStateOf("") }
 
+    TextField(
+        value = text,
+        onValueChange = { newText -> text = newText },
+        label = { Text("입력하세요") },
+        modifier = weight,
+    )
+    return text
+}
+
+@Composable
+fun TagInput(): List<String> {
+    var tags by remember { mutableStateOf(listOf<String>()) }
+    var tempTag by remember { mutableStateOf("") }
+
+    Column {
         TextField(
-            value = text,
-            onValueChange = { newText -> text = newText },
-            label = { Text("입력하세요") },
-            modifier = weight,
-        )
-        return text
-    }
-
-    @Composable
-    fun TagInput(): List<String> {
-        var tags by remember { mutableStateOf(listOf<String>()) }
-        var tempTag by remember { mutableStateOf("") }
-        var showDialog by remember { mutableStateOf(false) }
-
-        Column() {
-            TextField(
-                value = tempTag,
-                onValueChange = { tempTag = it },
-                label = { Text("태그 입력 후 엔터") },
-                modifier = Modifier.fillMaxWidth(),
-                singleLine = true,
-                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-                keyboardActions = KeyboardActions(
-                    onDone = {
-                        if (tempTag.isNotBlank() && !tags.contains(tempTag)) {
-                            when {
-                                tags.size > 5 -> {
-                                    return@KeyboardActions
-                                }
-                                tempTag.length > 5 -> {
-                                    return@KeyboardActions
-                                }
-                                else -> {
-                                    tags = tags + tempTag.trim()
-                                }
+            value = tempTag,
+            onValueChange = { tempTag = it },
+            label = { Text("태그 입력 후 엔터") },
+            modifier = Modifier.fillMaxWidth(),
+            singleLine = true,
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+            keyboardActions = KeyboardActions(
+                onDone = {
+                    if (tempTag.isNotBlank() && !tags.contains(tempTag)) {
+                        when {
+                            tags.size > 5 -> {
+                                return@KeyboardActions
                             }
-                            tempTag = ""
+                            tempTag.length > 5 -> {
+                                return@KeyboardActions
+                            }
+                            else -> {
+                                tags = tags + tempTag.trim()
+                            }
                         }
-                    },
-                ),
-            )
-        }
-
-        return tags
+                        tempTag = ""
+                    }
+                },
+            ),
+        )
     }
+
+    return tags
 }

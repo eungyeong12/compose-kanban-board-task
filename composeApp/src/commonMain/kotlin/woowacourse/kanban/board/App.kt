@@ -23,10 +23,10 @@ import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.SuggestionChip
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -43,28 +43,24 @@ import org.jetbrains.compose.resources.painterResource
 @Composable
 @Preview(showBackground = true)
 fun App() {
-    val inputWindow = InputWindow()
-    val taskCardGroup by remember { mutableStateOf(mutableListOf<TaskCard>()) }
+    val taskCardGroup = remember { mutableStateListOf<TaskCard>() }
+    val openInputWindow = remember { mutableStateOf(false) }
 
     Box(
         modifier = Modifier.fillMaxSize(),
     ) {
-        val openInputWindow = AddButton(modifier = Modifier.align(Alignment.BottomEnd))
-        if (openInputWindow) {
-            val (taskCard, isConfirmed) = inputWindow.OpenInputWindow()
-            if (isConfirmed) {
-                taskCardGroup.add(taskCard)
-                GroupTheTaskCard(taskCardGroup)
-            }
+        GroupTheTaskCard(taskCardGroup)
+        AddButton(modifier = Modifier.align(Alignment.BottomEnd), openInputWindow)
+        if (openInputWindow.value) {
+            OpenInputWindow(taskCardGroup, openInputWindow)
         }
     }
 }
 
 @Composable
-fun AddButton(modifier: Modifier): Boolean {
-    var showInputWindow by remember { mutableStateOf(false) }
+fun AddButton(modifier: Modifier, openInputWindow: MutableState<Boolean>) {
     Button(
-        onClick = { showInputWindow = !showInputWindow },
+        onClick = { openInputWindow.value = true },
         colors = ButtonDefaults.buttonColors(
             containerColor = Color(0xFF5CFFD1),
             contentColor = Color.Black,
@@ -83,7 +79,6 @@ fun AddButton(modifier: Modifier): Boolean {
             )
         }
     }
-    return showInputWindow
 }
 
 @Composable
