@@ -1,4 +1,4 @@
-package woowacourse.kanban.board
+package woowacourse.kanban.board.study
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
