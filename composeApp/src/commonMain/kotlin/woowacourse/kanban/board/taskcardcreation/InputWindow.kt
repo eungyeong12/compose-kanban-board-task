@@ -24,6 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.kanban.board.taskcard.TaskCardDto
 
@@ -123,4 +124,15 @@ fun SaveButton(
     ) {
         Text("확인")
     }
+}
+
+@Preview
+@Composable
+fun InputWindowPreview() {
+    InputWindow(
+        modifier = Modifier,
+        onAddTaskCard = {},
+        showInputWindow = true,
+        onValueChange = {}
+    )
 }
