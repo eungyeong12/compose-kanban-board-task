@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
@@ -18,7 +18,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
@@ -27,9 +26,10 @@ import woowacourse.kanban.board.taskcard.TaskCard
 
 @Composable
 fun OpenInputWindow(
-    taskCardGroup: SnapshotStateList<TaskCard>,
+    modifier: Modifier = Modifier,
+    onAddTaskCard: (TaskCard) -> Unit,
     showInputWindow: Boolean,
-    onValueChange: (Boolean) -> Unit
+    onValueChange: () -> Unit
 ) {
     var title = "LazyColumn 컴포넌트 구현"
     var contents = ""
@@ -38,12 +38,11 @@ fun OpenInputWindow(
 
     if (showInputWindow) {
         OutlinedCard(
-            modifier = Modifier
-                .size(width = 200.dp, height = 270.dp),
+            modifier = modifier.width(200.dp)
         ) {
             Column {
                 // 제목 입력
-                Row(modifier = Modifier.height(40.dp)) {
+                Row {
                     Text(
                         text = "제목: ",
                         modifier = Modifier.align(Alignment.CenterVertically),
@@ -83,8 +82,8 @@ fun OpenInputWindow(
                 // 확인 버튼
                 Button(
                     onClick = {
-                        taskCardGroup.add(TaskCard(title, contents, tags, author))
-                        onValueChange(showInputWindow)
+                        onAddTaskCard(TaskCard(title, contents, tags, author))
+                        onValueChange()
                     },
                     modifier = Modifier.align(Alignment.End),
                 ) {

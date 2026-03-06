@@ -18,11 +18,10 @@ import org.jetbrains.compose.resources.painterResource
 @Composable
 fun AddButton(
     modifier: Modifier,
-    showInputWindow: Boolean,
-    onValueChange: (Boolean) -> Unit,
+    onValueChange: () -> Unit,
 ) {
     Button(
-        onClick = { onValueChange(showInputWindow) },
+        onClick = { onValueChange() },
         colors = ButtonDefaults.buttonColors(
             containerColor = Color(0xFF5CFFD1),
             contentColor = Color.Black,
