@@ -13,7 +13,6 @@ import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -27,64 +26,70 @@ import androidx.compose.ui.unit.dp
 import woowacourse.kanban.board.taskcard.TaskCard
 
 @Composable
-fun OpenInputWindow(taskCardGroup: SnapshotStateList<TaskCard>, openInputWindow: MutableState<Boolean>) {
+fun OpenInputWindow(
+    taskCardGroup: SnapshotStateList<TaskCard>,
+    showInputWindow: Boolean,
+    onValueChange: (Boolean) -> Unit
+) {
     var title = "LazyColumn 컴포넌트 구현"
     var contents = ""
     var tags = listOf<String>()
     var author = "다이노"
 
-    OutlinedCard(
-        modifier = Modifier
-            .size(width = 200.dp, height = 270.dp),
-    ) {
-        Column {
-            // 제목 입력
-            Row(modifier = Modifier.height(40.dp)) {
-                Text(
-                    text = "제목: ",
-                    modifier = Modifier.align(Alignment.CenterVertically),
-                )
-                val tempTitle = GetTextField(Modifier.weight(1f))
-                if (tempTitle.isNotEmpty()) title = tempTitle
-            }
-            Spacer(modifier = Modifier.height(10.dp))
-            // 내용 입력
-            Row(modifier = Modifier.height(40.dp)) {
-                Text(
-                    text = "내용: ",
-                    modifier = Modifier.align(Alignment.CenterVertically),
-                )
-                contents = GetTextField(Modifier.weight(1f))
-            }
-            Spacer(modifier = Modifier.height(10.dp))
-            // 태그 입력
-            Row(modifier = Modifier.height(40.dp)) {
-                Text(
-                    text = "태그: ",
-                    modifier = Modifier.align(Alignment.CenterVertically),
-                )
-                tags = TagInput()
-            }
-            Spacer(modifier = Modifier.height(10.dp))
-            // 작성자 입력
-            Row(modifier = Modifier.height(40.dp)) {
-                Text(
-                    text = "작성자: ",
-                    modifier = Modifier.align(Alignment.CenterVertically),
-                )
-                val tempAuthor = GetTextField(Modifier.weight(1f))
-                if (tempAuthor.isNotEmpty()) author = tempAuthor
-            }
-            Spacer(modifier = Modifier.height(10.dp))
-            // 확인 버튼
-            Button(
-                onClick = {
-                    taskCardGroup.add(TaskCard(title, contents, tags, author))
-                    openInputWindow.value = false
-                },
-                modifier = Modifier.align(Alignment.End),
-            ) {
-                Text("확인")
+    if (showInputWindow) {
+        OutlinedCard(
+            modifier = Modifier
+                .size(width = 200.dp, height = 270.dp),
+        ) {
+            Column {
+                // 제목 입력
+                Row(modifier = Modifier.height(40.dp)) {
+                    Text(
+                        text = "제목: ",
+                        modifier = Modifier.align(Alignment.CenterVertically),
+                    )
+                    val tempTitle = GetTextField(Modifier.weight(1f))
+                    if (tempTitle.isNotEmpty()) title = tempTitle
+                }
+                Spacer(modifier = Modifier.height(10.dp))
+                // 내용 입력
+                Row(modifier = Modifier.height(40.dp)) {
+                    Text(
+                        text = "내용: ",
+                        modifier = Modifier.align(Alignment.CenterVertically),
+                    )
+                    contents = GetTextField(Modifier.weight(1f))
+                }
+                Spacer(modifier = Modifier.height(10.dp))
+                // 태그 입력
+                Row(modifier = Modifier.height(40.dp)) {
+                    Text(
+                        text = "태그: ",
+                        modifier = Modifier.align(Alignment.CenterVertically),
+                    )
+                    tags = TagInput()
+                }
+                Spacer(modifier = Modifier.height(10.dp))
+                // 작성자 입력
+                Row(modifier = Modifier.height(40.dp)) {
+                    Text(
+                        text = "작성자: ",
+                        modifier = Modifier.align(Alignment.CenterVertically),
+                    )
+                    val tempAuthor = GetTextField(Modifier.weight(1f))
+                    if (tempAuthor.isNotEmpty()) author = tempAuthor
+                }
+                Spacer(modifier = Modifier.height(10.dp))
+                // 확인 버튼
+                Button(
+                    onClick = {
+                        taskCardGroup.add(TaskCard(title, contents, tags, author))
+                        onValueChange(showInputWindow)
+                    },
+                    modifier = Modifier.align(Alignment.End),
+                ) {
+                    Text("확인")
+                }
             }
         }
     }
