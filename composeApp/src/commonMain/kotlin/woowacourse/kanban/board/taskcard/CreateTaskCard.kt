@@ -66,7 +66,7 @@ fun CreateTaskCard(
 ) {
     Card(
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface,
+            containerColor = Color.White,
         ),
         border = BorderStroke(1.dp, Color(0xFFE5E7EB)),
         modifier = Modifier.width(286.dp)
