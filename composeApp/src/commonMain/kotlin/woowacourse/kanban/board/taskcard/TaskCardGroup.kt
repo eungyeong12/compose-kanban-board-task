@@ -6,12 +6,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun GroupTheTaskCard(taskCardGroup: List<TaskCard>) {
+fun TaskCardGroup(taskCardGroup: List<TaskCardDto>) {
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(52.dp)
     ) {
         items(taskCardGroup.size) { item ->
-            CreateTaskCard(taskCard = taskCardGroup[item])
+            TaskCard(taskCard = taskCardGroup[item])
         }
     }
 }

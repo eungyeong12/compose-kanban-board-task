@@ -13,14 +13,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.kanban.board.component.AddButton
-import woowacourse.kanban.board.taskcard.GroupTheTaskCard
-import woowacourse.kanban.board.taskcard.TaskCard
-import woowacourse.kanban.board.taskcardcreation.OpenInputWindow
+import woowacourse.kanban.board.taskcard.TaskCardGroup
+import woowacourse.kanban.board.taskcard.TaskCardDto
+import woowacourse.kanban.board.taskcardcreation.InputWindow
 
 @Preview(showBackground = true)
 @Composable
 fun App() {
-    var taskCardGroup by rememberSaveable { mutableStateOf(listOf<TaskCard>()) }
+    var taskCardGroup by rememberSaveable { mutableStateOf(listOf<TaskCardDto>()) }
     var showOpenWindow by rememberSaveable { mutableStateOf(false) }
 
     Box(
@@ -28,12 +28,12 @@ fun App() {
             .fillMaxSize()
             .padding(16.dp),
     ) {
-        GroupTheTaskCard(taskCardGroup)
+        TaskCardGroup(taskCardGroup)
         AddButton(
             modifier = Modifier.align(Alignment.BottomEnd),
             { showOpenWindow = true }
         )
-        OpenInputWindow(
+        InputWindow(
             modifier = Modifier.align(Alignment.Center),
             { taskCardGroup = taskCardGroup + it },
             showOpenWindow,
