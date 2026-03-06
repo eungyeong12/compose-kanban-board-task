@@ -1,8 +1,8 @@
-package woowacourse.kanban.board
+package woowacourse.kanban.board.taskcard
 
 data class TaskCard(
     val title: String,
-    val contents: String,
+    val content: String,
     val tags: List<String>,
     val author: String,
 )

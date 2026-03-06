@@ -24,6 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
+import woowacourse.kanban.board.taskcard.TaskCard
 
 @Composable
 fun OpenInputWindow(taskCardGroup: SnapshotStateList<TaskCard>, openInputWindow: MutableState<Boolean>) {
