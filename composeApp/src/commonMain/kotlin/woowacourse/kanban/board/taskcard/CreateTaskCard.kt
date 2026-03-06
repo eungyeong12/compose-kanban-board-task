@@ -2,11 +2,14 @@ package woowacourse.kanban.board.taskcard
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -18,6 +21,7 @@ import androidx.compose.material3.SuggestionChip
 import androidx.compose.material3.SuggestionChipDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
@@ -115,20 +119,20 @@ fun Tags(tags: List<String>) {
         verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         tags.forEach { tag ->
-            SuggestionChip(
-                onClick = {},
-                label = { Text(
+            Box(
+                modifier = Modifier
+                    .height(24.dp)
+                    .background(Color(0xFFF3F4F6), MaterialTheme.shapes.large)
+                    .padding(horizontal = 8.dp),
+            ) {
+                Text(
                     text = tag,
                     style = MaterialTheme.typography.bodyMedium,
-                    fontSize = 12.sp
-                )},
-                colors = SuggestionChipDefaults.suggestionChipColors(
-                    containerColor = Color(0xFFF3F4F6),
-                    labelColor = Color(0xFF364153),
-                ),
-                border = BorderStroke(0.dp, Color.Transparent),
-                shape = MaterialTheme.shapes.large
-            )
+                    color = Color(0xFF364153),
+                    fontSize = 12.sp,
+                    modifier = Modifier.align(Alignment.Center)
+                )
+            }
         }
     }
 }
