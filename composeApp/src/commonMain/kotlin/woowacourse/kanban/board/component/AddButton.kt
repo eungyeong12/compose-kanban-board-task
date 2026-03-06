@@ -27,7 +27,7 @@ fun AddButton(
             containerColor = Color(0xFF5CFFD1),
             contentColor = Color.Black,
         ),
-        modifier = modifier.size(height = 150.dp, width = 250.dp),
+        modifier = modifier
     ) {
         Row {
             Image(
