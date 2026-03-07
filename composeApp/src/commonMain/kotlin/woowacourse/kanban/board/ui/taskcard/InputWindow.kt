@@ -1,4 +1,4 @@
-package woowacourse.kanban.board.taskcardcreation
+package woowacourse.kanban.board.ui.taskcard
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
@@ -26,7 +26,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import woowacourse.kanban.board.taskcard.TaskCardDto
+import woowacourse.kanban.board.domain.TaskCardDto
 
 @Composable
 fun InputWindow(

@@ -1,4 +1,4 @@
-package woowacourse.kanban.board.taskcard
+package woowacourse.kanban.board.domain
 
 data class TaskCardDto(
     val title: String,

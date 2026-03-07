@@ -1,4 +1,4 @@
-package woowacourse.kanban.board.taskcard
+package woowacourse.kanban.board.ui.home
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.sp
 import kanbanboard.composeapp.generated.resources.Res
 import kanbanboard.composeapp.generated.resources.profile_image
 import org.jetbrains.compose.resources.painterResource
+import woowacourse.kanban.board.domain.TaskCardDto
 
 class TaskCardPreviewParameterProvider : PreviewParameterProvider<TaskCardDto> {
     override val values = sequenceOf(
