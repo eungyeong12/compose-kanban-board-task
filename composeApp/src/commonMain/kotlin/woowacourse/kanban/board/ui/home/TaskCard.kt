@@ -31,29 +31,29 @@ import androidx.compose.ui.unit.sp
 import kanbanboard.composeapp.generated.resources.Res
 import kanbanboard.composeapp.generated.resources.profile_image
 import org.jetbrains.compose.resources.painterResource
-import woowacourse.kanban.board.domain.TaskCardDto
+import woowacourse.kanban.board.domain.Task
 
-class TaskCardPreviewParameterProvider : PreviewParameterProvider<TaskCardDto> {
+class TaskCardPreviewParameterProvider : PreviewParameterProvider<Task> {
     override val values = sequenceOf(
-        TaskCardDto(
+        Task(
             title = "LazyColumn 컴포넌트 구현",
             content = "세로 스크롤 가능한 리스트 컴포넌트를 만들고 성능 최적화를 적용합니다.",
             tags = listOf("컴포넌트", "성능"),
             author = "다이노"
         ),
-        TaskCardDto(
+        Task(
             title = "LazyColumn 컴포넌트 구현",
             content = "",
             tags = listOf("컴포넌트", "성능"),
             author = "다이노"
         ),
-        TaskCardDto(
+        Task(
             title = "LazyColumn 컴포넌트 구현",
             content = "세로 스크롤 가능한 리스트 컴포넌트를 만들고 성능 최적화를 적용합니다.",
             tags = listOf(),
             author = "다이노"
         ),
-        TaskCardDto(
+        Task(
             title = "LazyColumn 컴포넌트 구현",
             content = "",
             tags = listOf(),
@@ -65,7 +65,7 @@ class TaskCardPreviewParameterProvider : PreviewParameterProvider<TaskCardDto> {
 @Composable
 @Preview(showBackground = true)
 fun TaskCard(
-    @PreviewParameter(TaskCardPreviewParameterProvider::class) taskCard: TaskCardDto
+    @PreviewParameter(TaskCardPreviewParameterProvider::class) task: Task
 ) {
     Card(
         colors = CardDefaults.cardColors(
@@ -78,11 +78,11 @@ fun TaskCard(
             modifier = Modifier.padding(17.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            Title(title = taskCard.title)
-            if (taskCard.content.isNotEmpty()) Content(content = taskCard.content)
-            if (taskCard.tags.isNotEmpty()) Tags(tags = taskCard.tags)
+            Title(title = task.title)
+            if (task.content.isNotEmpty()) Content(content = task.content)
+            if (task.tags.isNotEmpty()) Tags(tags = task.tags)
             HorizontalDivider(color = Color(0xFFE5E7EB))
-            Profile(author = taskCard.author)
+            Profile(author = task.author)
         }
     }
 }

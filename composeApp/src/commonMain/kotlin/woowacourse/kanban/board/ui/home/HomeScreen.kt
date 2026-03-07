@@ -12,30 +12,30 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import woowacourse.kanban.board.domain.TaskCardDto
+import woowacourse.kanban.board.domain.Task
 import woowacourse.kanban.board.ui.taskcard.InputWindow
 
 @Preview(showBackground = true)
 @Composable
 fun HomeScreen() {
-    var taskCardGroup by rememberSaveable { mutableStateOf(listOf<TaskCardDto>()) }
-    var showOpenWindow by rememberSaveable { mutableStateOf(false) }
+    var tasks by rememberSaveable { mutableStateOf(listOf<Task>()) }
+    var showInputWindow by rememberSaveable { mutableStateOf(false) }
 
     Box(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
     ) {
-        TaskCardGroup(taskCardGroup)
+        TaskCards(tasks)
         AddButton(
             modifier = Modifier.align(Alignment.BottomEnd),
-            { showOpenWindow = true }
+            { showInputWindow = true }
         )
         InputWindow(
             modifier = Modifier.align(Alignment.Center),
-            { taskCardGroup = taskCardGroup + it },
-            showOpenWindow,
-            { showOpenWindow = false }
+            { tasks = tasks + it },
+            showInputWindow,
+            { showInputWindow = false }
         )
     }
 }

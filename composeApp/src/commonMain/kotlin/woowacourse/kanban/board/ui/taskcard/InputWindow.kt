@@ -26,12 +26,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import woowacourse.kanban.board.domain.TaskCardDto
+import woowacourse.kanban.board.domain.Task
 
 @Composable
 fun InputWindow(
     modifier: Modifier,
-    onAddTaskCard: (TaskCardDto) -> Unit,
+    onAddTaskCard: (Task) -> Unit,
     showInputWindow: Boolean,
     onValueChange: () -> Unit
 ) {
@@ -60,7 +60,7 @@ fun InputWindow(
                 InputField(title = "작성자: ", onValueChange = { author = it })
                 SaveButton(
                     onClick = {
-                        onAddTaskCard(TaskCardDto(title, content, tags, author))
+                        onAddTaskCard(Task(title, content, tags, author))
                         onValueChange()
                     },
                     modifier = Modifier.align(Alignment.End)
