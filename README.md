@@ -1,40 +1,17 @@
-This is a Kotlin Multiplatform project targeting Android, Desktop (JVM).
+# 칸반 보드 태스크
 
-* [/composeApp](./composeApp/src) is for code that will be shared across your Compose Multiplatform applications.
-  It contains several subfolders:
-  - [commonMain](./composeApp/src/commonMain/kotlin) is for code that’s common for all targets.
-  - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
-    For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-    the [iosMain](./composeApp/src/iosMain/kotlin) folder would be the right place for such calls.
-    Similarly, if you want to edit the Desktop (JVM) specific part, the [jvmMain](./composeApp/src/jvmMain/kotlin)
-    folder is the appropriate location.
+### 1. task 추가 버튼을 누르면 입력창을 생성한다.
+### 2. 입력창의 내용은 4번 카드 내용을 따른다.
+### 3. 입력창의 확인 버튼을 누르면, 카드가 생성된다.
+### 4. 카드 내용
+- 구성요소: 작성자, 제목, 내용, 태그
+  - 작성자(필수): 기본 이미지 / idle: "다이노"
+  - 제목(필수) / idle: "LazyColumn 컴포넌트 구현"
 
-### Build and Run Android Application
-
-To build and run the development version of the Android app, use the run configuration from the run widget
-in your IDE’s toolbar or build it directly from the terminal:
-- on macOS/Linux
-  ```shell
-  ./gradlew :composeApp:assembleDebug
-  ```
-- on Windows
-  ```shell
-  .\gradlew.bat :composeApp:assembleDebug
-  ```
-
-### Build and Run Desktop (JVM) Application
-
-To build and run the development version of the desktop app, use the run configuration from the run widget
-in your IDE’s toolbar or run it directly from the terminal:
-- on macOS/Linux
-  ```shell
-  ./gradlew :composeApp:run
-  ```
-- on Windows
-  ```shell
-  .\gradlew.bat :composeApp:run
-  ```
-
----
-
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)…
+- max 기준
+  - 제목: 한 줄까지, 이후는 말줄임표
+  - 내용: 두 줄까지, 이후 말줄임표
+  - 태그: 최대 5자, 5개
+  - 담당자 이름: 한 줄까지, 이후 말줄임표
+### 5. 예외 사항
+- 태그가 6자 이상이거나 6개 이상일 때 에러 메시지를 출력한다.
