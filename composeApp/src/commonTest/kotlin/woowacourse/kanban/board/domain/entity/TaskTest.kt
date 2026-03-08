@@ -21,7 +21,7 @@ class TaskTest {
         assertThat(result).isInstanceOf(Result.Success::class.java)
         assertThat(result as Result.Success).extracting("data.title").isEqualTo("title")
         assertThat(result.data.content).isEqualTo("content")
-        assertThat(result.data.tags).isEqualTo(listOf("tag1", "tag2"))
+        assertThat(result.data.tags).isEqualTo(listOf(Tag("tag1"), Tag("tag2")))
         assertThat(result.data.author).isEqualTo("author")
     }
 
@@ -49,5 +49,18 @@ class TaskTest {
         // then
         assertThat(result).isInstanceOf(Result.Error::class.java)
         assertThat(result as Result.Error).extracting("exception.message").isEqualTo("작성자를 입력해주세요")
+    }
+
+    @Test
+    fun `태그가 5개 초과인 경우 생성이 불가능하다`() {
+        // given
+        val tags = listOf("tag1", "tag2", "tag3", "tag4", "tag5", "tag6")
+
+        // when
+        val result = Task.of("title", "content", tags, "author")
+
+        // then
+        assertThat(result).isInstanceOf(Result.Error::class.java)
+        assertThat(result as Result.Error).extracting("exception.message").isEqualTo("태그는 최대 5개까지 입력할 수 있습니다")
     }
 }
