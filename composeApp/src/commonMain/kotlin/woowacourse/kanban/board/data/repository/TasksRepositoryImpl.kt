@@ -6,7 +6,6 @@ import woowacourse.kanban.board.data.Result
 import woowacourse.kanban.board.data.datasource.tasksData
 import woowacourse.kanban.board.domain.entity.Task
 import woowacourse.kanban.board.domain.repository.TasksRepository
-import kotlin.collections.plus
 
 class TasksRepositoryImpl: TasksRepository {
     private val tasks = MutableStateFlow(tasksData)
