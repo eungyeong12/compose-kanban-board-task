@@ -66,10 +66,10 @@ fun InputWindow(
                 modifier = modifier.padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                InputField(title = "제목: ", onValueChange = { title = it })
-                InputField(title = "내용: ", onValueChange = { content = it })
-                TagInput(title = "태그: ", tags = tags, onAddTag = { tags = tags + it }, onRemoveTag = { tags = tags - it })
-                InputField(title = "작성자: ", onValueChange = { author = it })
+                InputField(name = "제목: ", onValueChange = { title = it })
+                InputField(name = "내용: ", onValueChange = { content = it })
+                TagInput(name = "태그: ", tags = tags, onAddTag = { tags = tags + it }, onRemoveTag = { tags = tags - it })
+                InputField(name = "작성자: ", onValueChange = { author = it })
                 ErrorMessage(message = errorMessage)
                 Row(
                     modifier = Modifier.align(Alignment.End),
@@ -103,11 +103,11 @@ fun InputWindow(
 }
 
 @Composable
-fun InputField(title: String, onValueChange: (String) -> Unit) {
+private fun InputField(name: String, onValueChange: (String) -> Unit) {
     var text by rememberSaveable { mutableStateOf("") }
 
     Row(verticalAlignment = Alignment.CenterVertically) {
-        Text(text = title)
+        Text(text = name)
         Spacer(modifier = Modifier.width(8.dp))
         TextField(
             value = text,
@@ -122,11 +122,11 @@ fun InputField(title: String, onValueChange: (String) -> Unit) {
 }
 
 @Composable
-fun TagInput(title: String, tags: List<String>, onAddTag: (String) -> Unit, onRemoveTag: (String) -> Unit) {
+private fun TagInput(name: String, tags: List<String>, onAddTag: (String) -> Unit, onRemoveTag: (String) -> Unit) {
     var tag by rememberSaveable { mutableStateOf("") }
 
     Row(verticalAlignment = Alignment.CenterVertically) {
-        Text(text = title)
+        Text(text = name)
         Spacer(modifier = Modifier.width(8.dp))
         TextField(
             value = tag,
@@ -173,30 +173,22 @@ fun ErrorMessage(message: String) {
 }
 
 @Composable
-fun CancelButton(
-    onClick: () -> Unit
-) {
-    Button(
-        onClick = { onClick() }
-    ) {
+private fun CancelButton(onClick: () -> Unit) {
+    Button(onClick = { onClick() }) {
         Text("취소")
     }
 }
 
 @Composable
-fun SaveButton(
-    onClick: () -> Unit,
-) {
-    Button(
-        onClick = { onClick() }
-    ) {
+private fun SaveButton(onClick: () -> Unit) {
+    Button(onClick = { onClick() }) {
         Text("확인")
     }
 }
 
 @Preview
 @Composable
-fun InputWindowPreview() {
+private fun InputWindowPreview() {
     InputWindow(
         modifier = Modifier,
         onAddTaskCard = { _, _, _, _ -> true },

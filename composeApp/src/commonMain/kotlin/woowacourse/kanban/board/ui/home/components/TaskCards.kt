@@ -21,6 +21,6 @@ fun TaskCards(tasks: List<Task>) {
 
 @Preview(showBackground = true)
 @Composable
-fun TaskCardsPreview() {
+private fun TaskCardsPreview() {
     TaskCards(tasks = tasksData)
 }

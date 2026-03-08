@@ -45,6 +45,6 @@ fun AddButton(
 
 @Preview
 @Composable
-fun AddButtonPreview() {
+private fun AddButtonPreview() {
     AddButton(modifier = Modifier, onValueChange = {})
 }
