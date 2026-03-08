@@ -11,12 +11,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import woowacourse.kanban.board.domain.Task
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
+import woowacourse.kanban.board.ui.taskcard.InputWindow
 
 @Composable
 fun HomeScreen(
-    tasks: List<Task>
+    viewModel : HomeViewModel = viewModel(factory = homeViewModelFactory)
 ) {
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     var showInputWindow by rememberSaveable { mutableStateOf(false) }
 
     Box(
@@ -24,16 +27,17 @@ fun HomeScreen(
             .fillMaxSize()
             .padding(16.dp),
     ) {
-        TaskCards(tasks)
+        TaskCards(uiState.tasks)
         AddButton(
             modifier = Modifier.align(Alignment.BottomEnd),
             { showInputWindow = true }
         )
-//        InputWindow(
-//            modifier = Modifier.align(Alignment.Center),
-//            { tasks = tasks + it },
-//            showInputWindow,
-//            { showInputWindow = false }
-//        )
+        InputWindow(
+            modifier = Modifier.align(Alignment.Center),
+            { title, content, tags, author -> viewModel.addTask(title, content, tags, author) },
+            showInputWindow,
+            { showInputWindow = false },
+            uiState.errorMessage
+        )
     }
 }

@@ -1,4 +1,4 @@
-package woowacourse.kanban.board.data.impl
+package woowacourse.kanban.board.data.task.impl
 
 import woowacourse.kanban.board.domain.Task
 

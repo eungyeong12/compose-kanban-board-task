@@ -31,7 +31,7 @@ import androidx.compose.ui.unit.sp
 import kanbanboard.composeapp.generated.resources.Res
 import kanbanboard.composeapp.generated.resources.profile_image
 import org.jetbrains.compose.resources.painterResource
-import woowacourse.kanban.board.data.impl.tasksData
+import woowacourse.kanban.board.data.task.impl.tasksData
 import woowacourse.kanban.board.domain.Task
 
 class TaskCardPreviewParameterProvider : PreviewParameterProvider<Task> {
