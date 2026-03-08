@@ -32,6 +32,7 @@ import kanbanboard.composeapp.generated.resources.Res
 import kanbanboard.composeapp.generated.resources.profile_image
 import org.jetbrains.compose.resources.painterResource
 import woowacourse.kanban.board.data.datasource.tasksData
+import woowacourse.kanban.board.domain.entity.Tag
 import woowacourse.kanban.board.domain.entity.Task
 
 private class TaskCardPreviewParameterProvider : PreviewParameterProvider<Task> {
@@ -88,7 +89,7 @@ private fun Content(content: String) {
 }
 
 @Composable
-private fun Tags(tags: List<String>) {
+private fun Tags(tags: List<Tag>) {
     FlowRow(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalArrangement = Arrangement.spacedBy(4.dp)
@@ -101,7 +102,7 @@ private fun Tags(tags: List<String>) {
                     .padding(horizontal = 8.dp),
             ) {
                 Text(
-                    text = tag,
+                    text = tag.name,
                     style = MaterialTheme.typography.bodyMedium,
                     color = Color(0xFF364153),
                     fontSize = 12.sp,
