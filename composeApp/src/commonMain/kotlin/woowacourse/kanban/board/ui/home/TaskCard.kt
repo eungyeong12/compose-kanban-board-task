@@ -31,35 +31,11 @@ import androidx.compose.ui.unit.sp
 import kanbanboard.composeapp.generated.resources.Res
 import kanbanboard.composeapp.generated.resources.profile_image
 import org.jetbrains.compose.resources.painterResource
+import woowacourse.kanban.board.data.impl.tasksData
 import woowacourse.kanban.board.domain.Task
 
 class TaskCardPreviewParameterProvider : PreviewParameterProvider<Task> {
-    override val values = sequenceOf(
-        Task(
-            title = "LazyColumn 컴포넌트 구현",
-            content = "세로 스크롤 가능한 리스트 컴포넌트를 만들고 성능 최적화를 적용합니다.",
-            tags = listOf("컴포넌트", "성능"),
-            author = "다이노"
-        ),
-        Task(
-            title = "LazyColumn 컴포넌트 구현",
-            content = "",
-            tags = listOf("컴포넌트", "성능"),
-            author = "다이노"
-        ),
-        Task(
-            title = "LazyColumn 컴포넌트 구현",
-            content = "세로 스크롤 가능한 리스트 컴포넌트를 만들고 성능 최적화를 적용합니다.",
-            tags = listOf(),
-            author = "다이노"
-        ),
-        Task(
-            title = "LazyColumn 컴포넌트 구현",
-            content = "",
-            tags = listOf(),
-            author = "다이노"
-        )
-    )
+    override val values = tasksData.asSequence()
 }
 
 @Composable
