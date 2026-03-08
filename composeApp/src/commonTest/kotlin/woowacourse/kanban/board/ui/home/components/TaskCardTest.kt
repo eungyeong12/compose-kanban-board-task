@@ -25,7 +25,10 @@ class TaskCardTest {
         }
 
         onNodeWithText("LazyColumn 컴포넌트 구현", useUnmergedTree = true).assertExists()
-        onNodeWithText("세로 스크롤 가능한 리스트 컴포넌트를 만들고 성능 최적화를 적용합니다.", useUnmergedTree = true).assertExists()
+        onNodeWithText(
+            "세로 스크롤 가능한 리스트 컴포넌트를 만들고 성능 최적화를 적용합니다.",
+            useUnmergedTree = true
+        ).assertExists()
         onNodeWithText("컴포넌트", useUnmergedTree = true).assertExists()
         onNodeWithText("성능", useUnmergedTree = true).assertExists()
         onNodeWithText("다이노", useUnmergedTree = true).assertExists()
@@ -53,17 +56,20 @@ class TaskCardTest {
     @Test
     fun `제목, 설명, 담당자 필드가 있는 카드 - 제목, 설명, 담당자 노출`() = runComposeUiTest {
         val task = Task(
-        title = "LazyColumn 컴포넌트 구현",
-        content = "세로 스크롤 가능한 리스트 컴포넌트를 만들고 성능 최적화를 적용합니다.",
-        author = "다이노"
-    )
+            title = "LazyColumn 컴포넌트 구현",
+            content = "세로 스크롤 가능한 리스트 컴포넌트를 만들고 성능 최적화를 적용합니다.",
+            author = "다이노"
+        )
 
         setContent {
             TaskCard(task)
         }
 
         onNodeWithText("LazyColumn 컴포넌트 구현", useUnmergedTree = true).assertExists()
-        onNodeWithText("세로 스크롤 가능한 리스트 컴포넌트를 만들고 성능 최적화를 적용합니다.", useUnmergedTree = true).assertExists()
+        onNodeWithText(
+            "세로 스크롤 가능한 리스트 컴포넌트를 만들고 성능 최적화를 적용합니다.",
+            useUnmergedTree = true
+        ).assertExists()
         onNodeWithText("다이노", useUnmergedTree = true).assertExists()
     }
 

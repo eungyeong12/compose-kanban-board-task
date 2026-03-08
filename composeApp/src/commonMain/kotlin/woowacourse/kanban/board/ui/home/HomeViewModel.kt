@@ -28,7 +28,11 @@ class HomeViewModel(
     }
 
     fun refresh() {
-        _uiState.update { it.copy(errorMessage = "") }
+        clearErrorMessage()
+        getTasks()
+    }
+
+    fun getTasks() {
         val result = tasksRepository.getTasks()
         if (result is Result.Success) {
             _uiState.update { it.copy(tasks = result.data) }
@@ -47,6 +51,10 @@ class HomeViewModel(
             }
         }
     }
+
+    fun clearErrorMessage() {
+        _uiState.update { it.copy(errorMessage = "") }
+    }
 }
 
 val homeViewModelFactory = viewModelFactory {
@@ -55,4 +63,4 @@ val homeViewModelFactory = viewModelFactory {
     }
 }
 
-fun getTasksRepository(): TasksRepository = TasksRepositoryImpl()
+private fun getTasksRepository(): TasksRepository = TasksRepositoryImpl()
