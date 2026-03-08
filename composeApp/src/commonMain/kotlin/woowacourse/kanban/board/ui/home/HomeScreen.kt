@@ -13,6 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import woowacourse.kanban.board.ui.home.components.AddButton
+import woowacourse.kanban.board.ui.home.components.TaskCards
 import woowacourse.kanban.board.ui.taskcard.InputWindow
 
 @Composable

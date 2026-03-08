@@ -1,4 +1,4 @@
-package woowacourse.kanban.board.ui.home
+package woowacourse.kanban.board.ui.home.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Row

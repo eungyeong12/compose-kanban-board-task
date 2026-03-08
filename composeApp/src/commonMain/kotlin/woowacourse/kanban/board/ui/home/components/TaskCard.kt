@@ -1,4 +1,4 @@
-package woowacourse.kanban.board.ui.home
+package woowacourse.kanban.board.ui.home.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
