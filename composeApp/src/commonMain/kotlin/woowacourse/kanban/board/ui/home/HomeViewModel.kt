@@ -8,9 +8,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import woowacourse.kanban.board.data.Result
-import woowacourse.kanban.board.data.task.TasksRepository
-import woowacourse.kanban.board.data.task.impl.TasksRepositoryImpl
-import woowacourse.kanban.board.domain.Task
+import woowacourse.kanban.board.domain.repository.TasksRepository
+import woowacourse.kanban.board.data.repository.TasksRepositoryImpl
+import woowacourse.kanban.board.domain.entity.Task
 
 data class HomeUiState(
     val tasks: List<Task> = emptyList(),

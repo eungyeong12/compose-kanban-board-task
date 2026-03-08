@@ -4,7 +4,7 @@ import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.runComposeUiTest
 import org.junit.Test
-import woowacourse.kanban.board.domain.Task
+import woowacourse.kanban.board.domain.entity.Task
 
 @OptIn(ExperimentalTestApi::class)
 class TaskCardTest {

@@ -5,8 +5,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import woowacourse.kanban.board.data.task.impl.tasksData
-import woowacourse.kanban.board.domain.Task
+import woowacourse.kanban.board.data.datasource.tasksData
+import woowacourse.kanban.board.domain.entity.Task
 
 @Composable
 fun TaskCards(tasks: List<Task>) {

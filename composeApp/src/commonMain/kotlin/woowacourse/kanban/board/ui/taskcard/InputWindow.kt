@@ -38,7 +38,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.flow.StateFlow
-import woowacourse.kanban.board.domain.Task
+import woowacourse.kanban.board.domain.entity.Task
 import woowacourse.kanban.board.ui.home.HomeUiState
 
 @Composable
