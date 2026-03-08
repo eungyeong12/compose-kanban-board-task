@@ -11,12 +11,19 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.InputChip
+import androidx.compose.material3.InputChipDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -61,22 +68,35 @@ fun InputWindow(
             ) {
                 InputField(title = "제목: ", onValueChange = { title = it })
                 InputField(title = "내용: ", onValueChange = { content = it })
-                TagInput(title = "태그: ", onAddTag = { tags = tags + it })
+                TagInput(title = "태그: ", tags = tags, onAddTag = { tags = tags + it }, onRemoveTag = { tags = tags - it })
                 InputField(title = "작성자: ", onValueChange = { author = it })
                 ErrorMessage(message = errorMessage)
-                SaveButton(
-                    onClick = {
-                        val success = onAddTaskCard(title, content, tags, author)
-                        if (success) {
+                Row(
+                    modifier = Modifier.align(Alignment.End),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    CancelButton(
+                        onClick = {
                             title = ""
                             content = ""
                             tags = listOf()
                             author = ""
                             onValueChange()
                         }
-                    },
-                    modifier = Modifier.align(Alignment.End)
-                )
+                    )
+                    SaveButton(
+                        onClick = {
+                            val success = onAddTaskCard(title, content, tags, author)
+                            if (success) {
+                                title = ""
+                                content = ""
+                                tags = listOf()
+                                author = ""
+                                onValueChange()
+                            }
+                        },
+                    )
+                }
             }
         }
     }
@@ -102,7 +122,7 @@ fun InputField(title: String, onValueChange: (String) -> Unit) {
 }
 
 @Composable
-fun TagInput(title: String, onAddTag: (String) -> Unit) {
+fun TagInput(title: String, tags: List<String>, onAddTag: (String) -> Unit, onRemoveTag: (String) -> Unit) {
     var tag by rememberSaveable { mutableStateOf("") }
 
     Row(verticalAlignment = Alignment.CenterVertically) {
@@ -123,6 +143,28 @@ fun TagInput(title: String, onAddTag: (String) -> Unit) {
             ),
         )
     }
+
+    FlowRow(
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalArrangement = Arrangement.spacedBy(4.dp)
+    ) {
+        tags.forEach { tag ->
+            InputChip(
+                onClick = {},
+                label = { Text(tag) },
+                selected = false,
+                trailingIcon = {
+                    IconButton(onClick = { onRemoveTag(tag) }) {
+                        Icon(
+                            Icons.Default.Close,
+                            contentDescription = "Remove",
+                            Modifier.size(InputChipDefaults.AvatarSize)
+                        )
+                    }
+                }
+            )
+        }
+    }
 }
 
 @Composable
@@ -131,13 +173,22 @@ fun ErrorMessage(message: String) {
 }
 
 @Composable
-fun SaveButton(
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
+fun CancelButton(
+    onClick: () -> Unit
 ) {
     Button(
-        onClick = { onClick() },
-        modifier = modifier
+        onClick = { onClick() }
+    ) {
+        Text("취소")
+    }
+}
+
+@Composable
+fun SaveButton(
+    onClick: () -> Unit,
+) {
+    Button(
+        onClick = { onClick() }
     ) {
         Text("확인")
     }
