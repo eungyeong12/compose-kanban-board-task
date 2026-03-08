@@ -168,7 +168,7 @@ private fun TagInput(name: String, tags: List<String>, onAddTag: (String) -> Uni
 }
 
 @Composable
-fun ErrorMessage(message: String) {
+private fun ErrorMessage(message: String) {
     Text(text = message, color = Color.Red)
 }
 
