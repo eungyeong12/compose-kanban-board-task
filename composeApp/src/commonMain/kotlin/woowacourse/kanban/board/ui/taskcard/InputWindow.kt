@@ -60,10 +60,10 @@ fun InputWindow(
                 modifier = modifier.padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                InputField(name = "제목: ", onValueChange = { title = it })
-                InputField(name = "내용: ", onValueChange = { content = it })
+                InputField(name = "제목: ", text = title, onValueChange = { title = it })
+                InputField(name = "내용: ", text = content, onValueChange = { content = it })
                 TagInput(name = "태그: ", tags = tags, onAddTag = { tags = tags + it }, onRemoveTag = { tags = tags - it })
-                InputField(name = "작성자: ", onValueChange = { author = it })
+                InputField(name = "작성자: ", text = author, onValueChange = { author = it })
                 ErrorMessage(message = errorMessage)
                 Row(
                     modifier = Modifier.align(Alignment.End),
@@ -97,18 +97,13 @@ fun InputWindow(
 }
 
 @Composable
-private fun InputField(name: String, onValueChange: (String) -> Unit) {
-    var text by rememberSaveable { mutableStateOf("") }
-
+private fun InputField(name: String, text: String, onValueChange: (String) -> Unit) {
     Row(verticalAlignment = Alignment.CenterVertically) {
         Text(text = name)
         Spacer(modifier = Modifier.width(8.dp))
         TextField(
             value = text,
-            onValueChange = {
-                text = it
-                onValueChange(text)
-            },
+            onValueChange = { onValueChange(it) },
             label = { Text("입력하세요") },
             modifier = Modifier.weight(1f)
         )
