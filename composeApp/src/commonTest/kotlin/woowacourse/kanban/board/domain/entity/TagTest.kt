@@ -11,7 +11,7 @@ class TagTest {
         val name = "tag"
 
         // when
-        val result = Tag.from(name)
+        val result = runCatching { Tag(name) }
 
         // then
         assertThat(result.isSuccess).isTrue
@@ -25,7 +25,7 @@ class TagTest {
         val name = ""
 
         // when
-        val result = Tag.from(name)
+        val result = runCatching { Tag(name) }
 
         // then
         assertThat(result.isFailure).isTrue
@@ -39,7 +39,7 @@ class TagTest {
         val name = "abcedf"
 
         // when
-        val result = Tag.from(name)
+        val result = runCatching { Tag(name) }
 
         // then
         assertThat(result.isFailure).isTrue

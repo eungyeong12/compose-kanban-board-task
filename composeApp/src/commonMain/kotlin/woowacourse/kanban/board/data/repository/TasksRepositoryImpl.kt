@@ -15,13 +15,14 @@ class TasksRepositoryImpl: TasksRepository {
         tags: List<String>,
         author: String
     ): Result<Unit> {
-        val result = Task.of(title, content, tags, author)
-        result.onFailure { exception ->
+        runCatching {
+            Task.of(title, content, tags, author)
+        }.onFailure { exception ->
             return Result.failure(exception)
-        }
-        result.onSuccess { task ->
+        }.onSuccess { task ->
             tasks.update { it + task }
         }
+
         return Result.success(Unit)
     }
 

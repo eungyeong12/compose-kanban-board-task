@@ -14,7 +14,7 @@ class TaskTest {
         val author = "author"
 
         // when
-        val result = Task.of(title, content, tags, author)
+        val result = runCatching { Task.of(title, content, tags, author) }
 
         // then
         assertThat(result.isSuccess).isTrue
@@ -31,7 +31,7 @@ class TaskTest {
         val title = ""
 
         // when
-        val result = Task.of(title, "content", listOf("tag1", "tag2"), "author")
+        val result = runCatching { Task.of(title, "content", listOf("tag1", "tag2"), "author") }
 
         // then
         assertThat(result.isFailure).isTrue
@@ -45,7 +45,7 @@ class TaskTest {
         val author = ""
 
         // when
-        val result = Task.of("title", "content", listOf("tag1", "tag2"), author)
+        val result = runCatching { Task.of("title", "content", listOf("tag1", "tag2"), author) }
 
         // then
         assertThat(result.isFailure).isTrue
@@ -59,7 +59,7 @@ class TaskTest {
         val tags = listOf("tag1", "tag2", "tag3", "tag4", "tag5", "tag6")
 
         // when
-        val result = Task.of("title", "content", tags, "author")
+        val result = runCatching { Task.of("title", "content", tags, "author") }
 
         // then
         assertThat(result.isFailure).isTrue

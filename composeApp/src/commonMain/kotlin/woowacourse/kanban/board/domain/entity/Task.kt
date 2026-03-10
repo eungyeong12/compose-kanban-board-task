@@ -7,16 +7,12 @@ data class Task(
     val author: String
 ) {
     companion object {
-        fun of(title: String, content: String, tagsInput: List<String>, author: String): Result<Task> {
-            if (title.isBlank()) return Result.failure(Exception("제목을 입력해주세요"))
-            if (author.isBlank()) return Result.failure(Exception("작성자를 입력해주세요"))
-            if (tagsInput.size > 5) return Result.failure(Exception("태그는 최대 5개까지 입력할 수 있습니다"))
-            val tags = tagsInput.map { name ->
-                val result = Tag.from(name)
-                result.onFailure { return Result.failure(it) }
-                result.getOrThrow()
-            }
-            return Result.success(Task(title, content, tags, author))
+        fun of(title: String, content: String, tagsInput: List<String>, author: String): Task {
+            require(title.isNotBlank()) { "제목을 입력해주세요" }
+            require(author.isNotBlank()) { "작성자를 입력해주세요" }
+            require(tagsInput.size <= 5) { "태그는 최대 5개까지 입력할 수 있습니다" }
+            val tags = tagsInput.map { Tag(it) }
+            return Task(title, content, tags, author)
         }
     }
 }

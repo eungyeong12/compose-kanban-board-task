@@ -32,25 +32,23 @@ class HomeViewModel(
     }
 
     fun getTasks() {
-        val result = tasksRepository.getTasks()
-        result.onFailure { exception ->
-            _uiState.update { it.copy(errorMessage =  exception.message ?: "") }
-        }
-        result.onSuccess { tasks ->
-            _uiState.update { it.copy(tasks = tasks) }
-        }
+        tasksRepository.getTasks()
+            .onFailure { exception ->
+                _uiState.update { it.copy(errorMessage =  exception.message ?: "") }
+            }.onSuccess { tasks ->
+                _uiState.update { it.copy(tasks = tasks) }
+            }
     }
 
     fun addTask(title: String, content: String, tags: List<String>, author: String): Boolean {
-        val result = tasksRepository.createTask(title, content, tags, author)
-        result.onFailure { exception ->
-            _uiState.update { it.copy(errorMessage = exception.message ?: "") }
-            return false
-        }
-        result.onSuccess {
-            refresh()
-            _uiState.update { it.copy(errorMessage = "") }
-        }
+        tasksRepository.createTask(title, content, tags, author)
+            .onFailure { exception ->
+                _uiState.update { it.copy(errorMessage = exception.message ?: "") }
+                return false
+            }.onSuccess {
+                refresh()
+                _uiState.update { it.copy(errorMessage = "") }
+            }
         return true
     }
 
