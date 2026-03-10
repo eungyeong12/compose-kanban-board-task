@@ -2,7 +2,6 @@ package woowacourse.kanban.board.domain.entity
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
-import woowacourse.kanban.board.data.Result
 
 class TaskTest {
 
@@ -18,11 +17,12 @@ class TaskTest {
         val result = Task.of(title, content, tags, author)
 
         // then
-        assertThat(result).isInstanceOf(Result.Success::class.java)
-        assertThat(result as Result.Success).extracting("data.title").isEqualTo("title")
-        assertThat(result.data.content).isEqualTo("content")
-        assertThat(result.data.tags).isEqualTo(listOf(Tag("tag1"), Tag("tag2")))
-        assertThat(result.data.author).isEqualTo("author")
+        assertThat(result.isSuccess).isTrue
+        assertThat(result.getOrNull()).isNotNull
+        assertThat(result.getOrNull()?.title).isEqualTo("title")
+        assertThat(result.getOrNull()?.content).isEqualTo("content")
+        assertThat(result.getOrNull()?.tags).isEqualTo(listOf(Tag("tag1"), Tag("tag2")))
+        assertThat(result.getOrNull()?.author).isEqualTo("author")
     }
 
     @Test
@@ -34,8 +34,9 @@ class TaskTest {
         val result = Task.of(title, "content", listOf("tag1", "tag2"), "author")
 
         // then
-        assertThat(result).isInstanceOf(Result.Error::class.java)
-        assertThat(result as Result.Error).extracting("exception.message").isEqualTo("제목을 입력해주세요")
+        assertThat(result.isFailure).isTrue
+        assertThat(result.exceptionOrNull()).isNotNull
+        assertThat(result.exceptionOrNull()?.message).isEqualTo("제목을 입력해주세요")
     }
 
     @Test
@@ -47,8 +48,9 @@ class TaskTest {
         val result = Task.of("title", "content", listOf("tag1", "tag2"), author)
 
         // then
-        assertThat(result).isInstanceOf(Result.Error::class.java)
-        assertThat(result as Result.Error).extracting("exception.message").isEqualTo("작성자를 입력해주세요")
+        assertThat(result.isFailure).isTrue
+        assertThat(result.exceptionOrNull()).isNotNull
+        assertThat(result.exceptionOrNull()?.message).isEqualTo("작성자를 입력해주세요")
     }
 
     @Test
@@ -60,7 +62,8 @@ class TaskTest {
         val result = Task.of("title", "content", tags, "author")
 
         // then
-        assertThat(result).isInstanceOf(Result.Error::class.java)
-        assertThat(result as Result.Error).extracting("exception.message").isEqualTo("태그는 최대 5개까지 입력할 수 있습니다")
+        assertThat(result.isFailure).isTrue
+        assertThat(result.exceptionOrNull()).isNotNull
+        assertThat(result.exceptionOrNull()?.message).isEqualTo("태그는 최대 5개까지 입력할 수 있습니다")
     }
 }

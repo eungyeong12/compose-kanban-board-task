@@ -1,6 +1,5 @@
 package woowacourse.kanban.board.domain.repository
 
-import woowacourse.kanban.board.data.Result
 import woowacourse.kanban.board.domain.entity.Task
 
 interface TasksRepository {

@@ -2,7 +2,6 @@ package woowacourse.kanban.board.domain.entity
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
-import woowacourse.kanban.board.data.Result
 
 class TagTest {
 
@@ -15,8 +14,9 @@ class TagTest {
         val result = Tag.from(name)
 
         // then
-        assertThat(result).isInstanceOf(Result.Success::class.java)
-        assertThat(result as Result.Success).extracting("data.name").isEqualTo("tag")
+        assertThat(result.isSuccess).isTrue
+        assertThat(result.getOrNull()).isNotNull
+        assertThat(result.getOrNull()?.name).isEqualTo("tag")
     }
 
     @Test
@@ -28,8 +28,9 @@ class TagTest {
         val result = Tag.from(name)
 
         // then
-        assertThat(result).isInstanceOf(Result.Error::class.java)
-        assertThat(result as Result.Error).extracting("exception.message").isEqualTo("태그 내용이 비어 있습니다")
+        assertThat(result.isFailure).isTrue
+        assertThat(result.exceptionOrNull()).isNotNull
+        assertThat(result.exceptionOrNull()?.message).isEqualTo("태그 내용이 비어 있습니다")
     }
 
     @Test
@@ -41,7 +42,8 @@ class TagTest {
         val result = Tag.from(name)
 
         // then
-        assertThat(result).isInstanceOf(Result.Error::class.java)
-        assertThat(result as Result.Error).extracting("exception.message").isEqualTo("태그의 길이는 5자 이하여야 합니다")
+        assertThat(result.isFailure).isTrue
+        assertThat(result.exceptionOrNull()).isNotNull
+        assertThat(result.exceptionOrNull()?.message).isEqualTo("태그의 길이는 5자 이하여야 합니다")
     }
 }

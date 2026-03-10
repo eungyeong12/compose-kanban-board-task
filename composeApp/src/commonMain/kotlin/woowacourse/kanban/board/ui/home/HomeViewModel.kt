@@ -7,7 +7,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import woowacourse.kanban.board.data.Result
 import woowacourse.kanban.board.data.repository.TasksRepositoryImpl
 import woowacourse.kanban.board.domain.entity.Task
 import woowacourse.kanban.board.domain.repository.TasksRepository
@@ -34,22 +33,25 @@ class HomeViewModel(
 
     fun getTasks() {
         val result = tasksRepository.getTasks()
-        if (result is Result.Success) {
-            _uiState.update { it.copy(tasks = result.data) }
+        result.onFailure { exception ->
+            _uiState.update { it.copy(errorMessage =  exception.message ?: "") }
+        }
+        result.onSuccess { tasks ->
+            _uiState.update { it.copy(tasks = tasks) }
         }
     }
 
     fun addTask(title: String, content: String, tags: List<String>, author: String): Boolean {
-        when (val result = tasksRepository.createTask(title, content, tags, author)) {
-            is Result.Success -> {
-                refresh()
-                return true
-            }
-            is Result.Error -> {
-                _uiState.update { it.copy(errorMessage = result.exception.message.toString()) }
-                return false
-            }
+        val result = tasksRepository.createTask(title, content, tags, author)
+        result.onFailure { exception ->
+            _uiState.update { it.copy(errorMessage = exception.message ?: "") }
+            return false
         }
+        result.onSuccess {
+            refresh()
+            _uiState.update { it.copy(errorMessage = "") }
+        }
+        return true
     }
 
     fun clearErrorMessage() {
