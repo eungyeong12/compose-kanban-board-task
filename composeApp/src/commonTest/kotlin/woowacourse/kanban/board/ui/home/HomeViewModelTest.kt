@@ -18,7 +18,7 @@ class HomeViewModelTest {
     }
 
     @Test
-    fun `태스크 목록 가져오기 성공 테스트`() {
+    fun `태스크 목록을 성공적으로 로드하면 데이터를 저장한다`() {
         // when
         viewModel.getTasks()
         val tasks = viewModel.uiState.value.tasks
@@ -29,7 +29,7 @@ class HomeViewModelTest {
     }
 
     @Test
-    fun `태스크 생성 성공 테스트`() {
+    fun `태스크를 성공적으로 생성하면 데이터를 저장한다`() {
         // given
         val title = "title"
         val content = "content"

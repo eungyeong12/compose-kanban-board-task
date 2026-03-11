@@ -6,7 +6,7 @@ import org.junit.Test
 class TagTest {
 
     @Test
-    fun `태그 생성 성공 테스트`() {
+    fun `태그 내용이 비어 있지 않고, 5자 이하인 경우 태그를 생성한다`() {
         // given
         val name = "tag"
 
@@ -20,7 +20,7 @@ class TagTest {
     }
 
     @Test
-    fun `태스크 내용이 비어 있는 경우 생성이 불가능하다`() {
+    fun `태그 내용이 비어 있는 경우 생성이 불가능하다`() {
         // given
         val name = ""
 

@@ -6,7 +6,7 @@ import org.junit.Test
 class TaskTest {
 
     @Test
-    fun `태스크 생성 성공 테스트`() {
+    fun `제목, 내용, 태그, 작성자 값이 유효할 경우 태스크를 생성한다`() {
         // given
         val title = "title"
         val content = "content"
