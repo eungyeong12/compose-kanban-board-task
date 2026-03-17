@@ -7,7 +7,7 @@ class Task private constructor(
     val author: String
 ) {
     companion object {
-        fun of(title: String, content: String, tagsInput: List<String>, author: String): Task {
+        fun of(title: String, content: String = "", tagsInput: List<String> = listOf(), author: String): Task {
             require(title.isNotBlank()) { "제목을 입력해주세요" }
             require(author.isNotBlank()) { "작성자를 입력해주세요" }
             require(tagsInput.size <= 5) { "태그는 최대 5개까지 입력할 수 있습니다" }

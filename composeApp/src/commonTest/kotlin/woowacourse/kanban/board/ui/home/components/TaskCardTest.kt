@@ -13,10 +13,10 @@ class TaskCardTest {
     @OptIn(ExperimentalTestApi::class)
     @Test
     fun `모든 필드가 있는 카드 - 제목, 설명, 태그, 담당자 모두 노출`() = runComposeUiTest {
-        val task = Task(
+        val task = Task.of(
             title = "LazyColumn 컴포넌트 구현",
             content = "세로 스크롤 가능한 리스트 컴포넌트를 만들고 성능 최적화를 적용합니다.",
-            tags = listOf(Tag("컴포넌트"), Tag("성능")),
+            tagsInput = listOf("컴포넌트", "성능"),
             author = "다이노"
         )
 
@@ -37,9 +37,9 @@ class TaskCardTest {
     @OptIn(ExperimentalTestApi::class)
     @Test
     fun `제목, 태그, 담당자 필드가 있는 카드 - 제목, 태그 담당자 노출`() = runComposeUiTest {
-        val task = Task(
+        val task = Task.of(
             title = "LazyColumn 컴포넌트 구현",
-            tags = listOf(Tag("컴포넌트"), Tag("성능")),
+            tagsInput = listOf("컴포넌트", "성능"),
             author = "다이노"
         )
 
@@ -55,7 +55,7 @@ class TaskCardTest {
     @OptIn(ExperimentalTestApi::class)
     @Test
     fun `제목, 설명, 담당자 필드가 있는 카드 - 제목, 설명, 담당자 노출`() = runComposeUiTest {
-        val task = Task(
+        val task = Task.of(
             title = "LazyColumn 컴포넌트 구현",
             content = "세로 스크롤 가능한 리스트 컴포넌트를 만들고 성능 최적화를 적용합니다.",
             author = "다이노"
@@ -75,7 +75,7 @@ class TaskCardTest {
 
     @Test
     fun `제목, 담당자 필드가 있는 카드 - 제목, 담당자 노출`() = runComposeUiTest {
-        val task = Task(
+        val task = Task.of(
             title = "LazyColumn 컴포넌트 구현",
             author = "다이노"
         )
