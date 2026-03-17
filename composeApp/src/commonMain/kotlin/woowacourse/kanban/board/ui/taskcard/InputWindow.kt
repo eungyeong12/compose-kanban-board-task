@@ -37,11 +37,11 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun InputWindow(
-    modifier: Modifier,
     onAddTaskCard: (String, String, List<String>, String) -> Boolean,
     showInputWindow: Boolean,
     onValueChange: () -> Unit,
-    errorMessage: String
+    errorMessage: String,
+    modifier: Modifier = Modifier,
 ) {
     var title by rememberSaveable { mutableStateOf("") }
     var content by rememberSaveable { mutableStateOf("") }

@@ -36,14 +36,14 @@ fun HomeScreen(
             { showInputWindow = true }
         )
         InputWindow(
-            modifier = Modifier.align(Alignment.Center),
             { title, content, tags, author -> viewModel.addTask(title, content, tags, author) },
             showInputWindow,
             {
                 viewModel.clearErrorMessage()
                 showInputWindow = false
             },
-            uiState.errorMessage
+            uiState.errorMessage,
+            modifier = Modifier.align(Alignment.Center)
         )
     }
 }
