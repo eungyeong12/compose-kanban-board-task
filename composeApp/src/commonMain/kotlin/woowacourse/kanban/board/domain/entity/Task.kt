@@ -1,6 +1,6 @@
 package woowacourse.kanban.board.domain.entity
 
-data class Task(
+class Task private constructor(
     val title: String,
     val content: String = "",
     val tags: List<Tag> = listOf(),
