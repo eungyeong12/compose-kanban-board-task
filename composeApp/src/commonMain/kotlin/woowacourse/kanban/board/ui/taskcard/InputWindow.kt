@@ -65,34 +65,26 @@ fun InputWindow(
                 TagInput(name = "태그: ", tags = tags, onAddTag = { tags = tags + it }, onRemoveTag = { tags = tags - it })
                 InputField(name = "작성자: ", text = author, onValueChange = { author = it })
                 ErrorMessage(message = errorMessage)
-                Row(
-                    modifier = Modifier.align(Alignment.End),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    ActionButton(
-                        text = "취소",
-                        onClick = {
+                ActionButtonsRow(
+                    onCancelButtonClick = {
+                        title = ""
+                        content = ""
+                        tags = listOf()
+                        author = ""
+                        onValueChange()
+                    },
+                    onConfirmButtonClick = {
+                        val success = onAddTaskCard(title, content, tags, author)
+                        if (success) {
                             title = ""
                             content = ""
                             tags = listOf()
                             author = ""
                             onValueChange()
                         }
-                    )
-                    ActionButton(
-                        text = "확인",
-                        onClick = {
-                            val success = onAddTaskCard(title, content, tags, author)
-                            if (success) {
-                                title = ""
-                                content = ""
-                                tags = listOf()
-                                author = ""
-                                onValueChange()
-                            }
-                        },
-                    )
-                }
+                    },
+                    modifier = Modifier.align(Alignment.End)
+                )
             }
         }
     }
@@ -155,6 +147,27 @@ private fun TagInput(name: String, tags: List<String>, onAddTag: (String) -> Uni
                 }
             )
         }
+    }
+}
+
+@Composable
+private fun ActionButtonsRow(
+    onCancelButtonClick : () -> Unit,
+    onConfirmButtonClick : () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        ActionButton(
+            text = "취소",
+            onClick = { onCancelButtonClick() }
+        )
+        ActionButton(
+            text = "확인",
+            onClick = { onConfirmButtonClick() },
+        )
     }
 }
 
