@@ -69,7 +69,8 @@ fun InputWindow(
                     modifier = Modifier.align(Alignment.End),
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    CancelButton(
+                    ActionButton(
+                        text = "취소",
                         onClick = {
                             title = ""
                             content = ""
@@ -78,7 +79,8 @@ fun InputWindow(
                             onValueChange()
                         }
                     )
-                    SaveButton(
+                    ActionButton(
+                        text = "확인",
                         onClick = {
                             val success = onAddTaskCard(title, content, tags, author)
                             if (success) {
@@ -162,16 +164,12 @@ private fun ErrorMessage(message: String) {
 }
 
 @Composable
-private fun CancelButton(onClick: () -> Unit) {
-    Button(onClick = { onClick() }) {
-        Text("취소")
-    }
-}
-
-@Composable
-private fun SaveButton(onClick: () -> Unit) {
-    Button(onClick = { onClick() }) {
-        Text("확인")
+private fun ActionButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifier) {
+    Button(
+        modifier = modifier,
+        onClick = { onClick() }
+    ) {
+        Text(text)
     }
 }
 
